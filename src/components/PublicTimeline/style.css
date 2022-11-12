@@ -27,6 +27,7 @@
 }
 
 .public-layout {
+  padding: "0 50px";
   min-height: 100vh;
   background-position: 0px 0px;
   animation: animatedBackground 30s linear infinite alternate;
@@ -39,5 +40,12 @@
   }
   to {
     background-position: 100% 100%;
+  }
+}
+
+@media only screen and (max-width: 1000px) {
+  /* For mobile phones: */
+  .public-layout {
+    padding: 0;
   }
 }

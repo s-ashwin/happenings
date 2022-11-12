@@ -1,16 +1,22 @@
-.timelinePage {
-  width: 100%;
-  height: 100%;
-  padding: 2rem;
+.site-layout {
+  padding: "0 50px";
+  background-color: white;
 }
-.addEvent{
-    margin-top:-1rem;
+.addEvent {
+  margin-top: -1rem;
 }
-.dropdown-btn{
-    width:fit-content;
+.dropdown-btn {
+  width: fit-content;
 }
 .dropdown-btn .ant-dropdown-trigger {
   border: none;
   background: none;
   border-radius: 50% !important;
 }
+
+@media only screen and (max-width: 1000px) {
+    /* For mobile phones: */
+    .site-layout {
+      padding: 0;
+    }
+  }

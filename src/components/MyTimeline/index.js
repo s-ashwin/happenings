@@ -54,7 +54,6 @@ export default function MyTimeline() {
         <NavBar />
         <Content
           className="site-layout"
-          style={{ padding: "0 50px", backgroundColor: "white" }}
         >
           <div className="site-layout-background" style={{ padding: 24 }}>
             <Timeline mode="alternate">

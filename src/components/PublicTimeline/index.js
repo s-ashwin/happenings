@@ -56,7 +56,6 @@ export default function PublicTimeline() {
     <Layout style={{ height: "100%" }}>
       <Content
         className="site-layout public-layout"
-        style={{ padding: "0 50px" }}
       >
         <div className="site-layout-background" style={{ padding: 24 }}>
           {userName && (
