@@ -50,6 +50,7 @@ export default function PublicTimeline() {
 
   useEffect(() => {
     fetchTimeline();
+    document.title=username
   }, [username]);
 
   return (
