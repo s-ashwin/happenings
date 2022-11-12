@@ -1,0 +1,16 @@
+.timelinePage {
+  width: 100%;
+  height: 100%;
+  padding: 2rem;
+}
+.addEvent{
+    margin-top:-1rem;
+}
+.dropdown-btn{
+    width:fit-content;
+}
+.dropdown-btn .ant-dropdown-trigger {
+  border: none;
+  background: none;
+  border-radius: 50% !important;
+}
