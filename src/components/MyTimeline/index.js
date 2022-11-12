@@ -10,8 +10,6 @@ import NavBar from "../NavBar";
 import { handleError, handleSuccess } from "../../util";
 import { loadingIcon } from "../PublicTimeline";
 
-
-
 export default function MyTimeline() {
   const [timeline, setTimeline] = useState([]);
   const [event, setEvent] = useState(null);
@@ -45,7 +43,7 @@ export default function MyTimeline() {
   }
 
   const deleteAlert = (id) => {
-    Modal.warning({
+    Modal.confirm({
       title: "Are you sure to delete this event from your timeline",
       okText: "Yes",
       onOk: async () => {
@@ -56,7 +54,7 @@ export default function MyTimeline() {
         handleError(error);
         if (!error) {
           handleSuccess("Event deleted");
-          fetchTimeline()
+          fetchTimeline();
         }
       }
     });
