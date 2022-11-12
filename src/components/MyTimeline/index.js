@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useUserStore } from "../../store/userStore";
 import { supabaseClient } from "../../supabase/client";
-import { Button, Empty, Layout, Spin, Tag, Timeline } from "antd";
+import { Button, Empty, Layout, Modal, Spin, Tag, Timeline } from "antd";
 import "./style.css";
 import EventForm from "../EventForm";
-import { PlusOutlined } from "@ant-design/icons";
+import { DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 import { Content } from "antd/lib/layout/layout";
 import NavBar from "../NavBar";
-import { handleError } from "../../util";
+import { handleError, handleSuccess } from "../../util";
 import { loadingIcon } from "../PublicTimeline";
+
+
 
 export default function MyTimeline() {
   const [timeline, setTimeline] = useState([]);
@@ -42,6 +44,24 @@ export default function MyTimeline() {
     setIsLoading(false);
   }
 
+  const deleteAlert = (id) => {
+    Modal.warning({
+      title: "Are you sure to delete this event from your timeline",
+      okText: "Yes",
+      onOk: async () => {
+        const { error } = await supabaseClient
+          .from("timeline")
+          .delete()
+          .eq("event_id", id);
+        handleError(error);
+        if (!error) {
+          handleSuccess("Event deleted");
+          fetchTimeline()
+        }
+      }
+    });
+  };
+
   useEffect(() => {
     if (user?.id) {
       fetchTimeline();
@@ -52,9 +72,7 @@ export default function MyTimeline() {
     <>
       <Layout style={{ height: "100%" }}>
         <NavBar />
-        <Content
-          className="site-layout"
-        >
+        <Content className="site-layout">
           <div className="site-layout-background" style={{ padding: 24 }}>
             <Timeline mode="alternate">
               {user && (
@@ -81,16 +99,25 @@ export default function MyTimeline() {
                       <h1 style={{ margin: 0 }}>{event.title} </h1>
 
                       <p>{event.description}</p>
-                      <Button
-                        onClick={() => {
-                          showModal();
-                          setEvent(event);
-                        }}
-                        size="small"
-                        shape="round"
-                      >
-                        Edit
-                      </Button>
+                      <div className="buttonContainer">
+                        <Button
+                          onClick={() => {
+                            showModal();
+                            setEvent(event);
+                          }}
+                          size="small"
+                          shape="round"
+                        >
+                          Edit
+                        </Button>
+                        <Button
+                          onClick={() => deleteAlert(event.event_id)}
+                          danger
+                          size="small"
+                          shape="round"
+                          icon={<DeleteOutlined />}
+                        />
+                      </div>
                     </>
                   </Timeline.Item>
                 ))}

@@ -13,10 +13,13 @@
   background: none;
   border-radius: 50% !important;
 }
+.buttonContainer > :first-child {
+  margin-right: 0.25rem;
+}
 
 @media only screen and (max-width: 1000px) {
-    /* For mobile phones: */
-    .site-layout {
-      padding: 0;
-    }
+  /* For mobile phones: */
+  .site-layout {
+    padding: 0;
   }
+}
