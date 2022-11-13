@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { useUserStore } from "../../store/userStore";
 import { supabaseClient } from "../../supabase/client";
 import UserConfig from "../UserConfig";
+import "./style.css"
 
 export default function NavBar() {
   const navigate = useNavigate();
@@ -65,7 +66,7 @@ export default function NavBar() {
         padding: "0 2rem"
       }}
     >
-      <h1 style={{color:"white", margin:0}}>Happenings</h1>
+      <h1 className="navHeading" style={{color:"white", margin:0}}>Happenings</h1>
       <Dropdown.Button
         className="dropdown-btn"
         overlay={user ? menu : loggedOutMenu}
