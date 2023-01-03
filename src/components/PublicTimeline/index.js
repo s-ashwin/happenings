@@ -54,7 +54,7 @@ export default function PublicTimeline() {
   }, [username]);
 
   return (
-    <Layout style={{ height: "100%" }}>
+    <Layout style={{ minHeight: "100vh" }}>
       <Content
         className="site-layout public-layout"
       >
