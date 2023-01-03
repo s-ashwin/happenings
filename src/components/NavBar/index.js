@@ -10,6 +10,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUserStore } from "../../store/userStore";
 import { supabaseClient } from "../../supabase/client";
+import { capitalize } from "../../util";
 import UserConfig from "../UserConfig";
 import "./style.css";
 
@@ -68,7 +69,7 @@ export default function NavBar({ publicTimeline = false, userName = "" }) {
       }}
     >
       <h1 className="navHeading" style={{ color: "white", margin: 0 }}>
-        Happenings {publicTimeline && ` | ${userName}`}
+        {publicTimeline ? capitalize(userName) : "Happenings"}
       </h1>
 
       {!publicTimeline && (
