@@ -8,6 +8,7 @@ import { handleError } from "../../util";
 import moment from "moment";
 
 import "./style.css";
+import NavBar from "../NavBar";
 
 export const loadingIcon = (
   <LoadingOutlined
@@ -21,7 +22,6 @@ export const loadingIcon = (
 export default function PublicTimeline() {
   let { username } = useParams();
   const [timeline, setTimeline] = useState([]);
-  const [userName, setUserName] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   async function fetchTimeline() {
@@ -33,7 +33,6 @@ export default function PublicTimeline() {
       .eq("url", username);
     handleError(error);
     if (!error && configData[0]?.is_public) {
-      setUserName(configData[0].display_name);
       const { data, error } = await supabaseClient
         .from("timeline")
         .select()
@@ -50,32 +49,27 @@ export default function PublicTimeline() {
 
   useEffect(() => {
     fetchTimeline();
-    document.title=username
+    document.title = username;
   }, [username]);
 
   return (
     <Layout style={{ minHeight: "100vh" }}>
-      <Content
-        className="site-layout public-layout"
-      >
+      <NavBar publicTimeline={true} userName={username} />
+      <Content className="site-layout public-layout">
         <div className="site-layout-background" style={{ padding: 24 }}>
-          {userName && (
-            <div className="publicHeader">
-              <h1>{userName}</h1>
-            </div>
-          )}
-
           {isLoading && (
             <div className="loader">
               <Spin indicator={loadingIcon} />
             </div>
           )}
 
-          <Timeline mode="alternate">
+          <Timeline className="timeline" mode="alternate">
             {timeline.map((event) => (
               <Timeline.Item key={event.event_id}>
                 <>
-                  <Tag color="processing">{moment(event.date).format("LL")}</Tag>
+                  <Tag color="processing">
+                    {moment(event.date).format("LL")}
+                  </Tag>
                   <h1 style={{ margin: 0 }}>{event.title} </h1>
 
                   <p>{event.description}</p>

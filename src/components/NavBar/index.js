@@ -1,7 +1,8 @@
 import {
   LogoutOutlined,
   SettingOutlined,
-  UserOutlined
+  UserOutlined,
+  GiftFilled
 } from "@ant-design/icons";
 import { Dropdown } from "antd";
 import { Header } from "antd/lib/layout/layout";
@@ -12,7 +13,7 @@ import { supabaseClient } from "../../supabase/client";
 import UserConfig from "../UserConfig";
 import "./style.css";
 
-export default function NavBar() {
+export default function NavBar({ publicTimeline = false, userName = "" }) {
   const navigate = useNavigate();
   const [isConfigOpen, setIsConfigOpen] = useState(false);
   const user = useUserStore((state) => state.user);
@@ -46,6 +47,16 @@ export default function NavBar() {
     }
   ];
 
+  const publicMenu = [
+    {
+      label: "Create your timeline",
+      key: "sign-in",
+      onClick: async () => {
+        navigate(user ? "/mytimeline" : "/signin");
+      }
+    }
+  ];
+
   return (
     <Header
       style={{
@@ -57,20 +68,32 @@ export default function NavBar() {
       }}
     >
       <h1 className="navHeading" style={{ color: "white", margin: 0 }}>
-        Happenings
+        Happenings {publicTimeline && ` | ${userName}`}
       </h1>
 
-      <Dropdown
-        menu={{ items: user ? menu : loggedOutMenu }}
-        placement="bottomLeft"
-      >
-        <UserOutlined
-          style={{
-            fontSize: 20,
-            color: "white"
-          }}
-        />
-      </Dropdown>
+      {!publicTimeline && (
+        <Dropdown
+          menu={{ items: user ? menu : loggedOutMenu }}
+          placement="bottomLeft"
+        >
+          <UserOutlined
+            style={{
+              fontSize: 20,
+              color: "white"
+            }}
+          />
+        </Dropdown>
+      )}
+      {publicTimeline && (
+        <Dropdown menu={{ items: publicMenu }} placement="bottomLeft">
+          <GiftFilled
+            style={{
+              fontSize: 20,
+              color: "white"
+            }}
+          />
+        </Dropdown>
+      )}
       {isConfigOpen && (
         <UserConfig
           isModalOpen={isConfigOpen}
