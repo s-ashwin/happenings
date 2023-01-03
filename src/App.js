@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import "antd/dist/antd.css";
 import "./App.css";
 import SignIn from "./components/SignIn";
 import { useUserStore } from "./store/userStore";
