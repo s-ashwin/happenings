@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useUserStore } from "../../store/userStore";
 import { supabaseClient } from "../../supabase/client";
-import { Button, Empty, Layout, Modal, Spin, Tag, Timeline } from "antd";
+import { Button, Empty, Image, Layout, Modal, Spin, Tag, Timeline } from "antd";
 import "./style.css";
 import EventForm from "../EventForm";
 import { DeleteOutlined, PlusOutlined } from "@ant-design/icons";
@@ -97,6 +97,11 @@ export default function MyTimeline() {
                       <h1 style={{ margin: 0 }}>{event.title} </h1>
 
                       <p>{event.description}</p>
+                      {event.image_url && (
+                        <div style={{ margin: "0.5rem 0" }}>
+                          <Image width={150} src={event.image_url} />
+                        </div>
+                      )}
                       <div className="buttonContainer">
                         <Button
                           onClick={() => {

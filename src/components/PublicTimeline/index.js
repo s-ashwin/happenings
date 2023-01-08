@@ -1,5 +1,5 @@
 import { LoadingOutlined } from "@ant-design/icons";
-import { Empty, Layout, Spin, Tag, Timeline } from "antd";
+import { Empty, Image, Layout, Spin, Tag, Timeline } from "antd";
 import { Content } from "antd/lib/layout/layout";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -73,6 +73,9 @@ export default function PublicTimeline() {
                   <h1 style={{ margin: 0 }}>{event.title} </h1>
 
                   <p>{event.description}</p>
+                  {event.image_url && (
+                    <Image width={150} src={event.image_url} />
+                  )}
                 </>
               </Timeline.Item>
             ))}
