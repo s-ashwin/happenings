@@ -28,7 +28,7 @@ export default function EventForm({
   const [isLoading, setIsLoading] = useState(false);
   const [isUploading, setIsUpLoading] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
-  const [imageURL, setImageUrl] = useState(event.image_url);
+  const [imageURL, setImageUrl] = useState(event?.image_url);
 
   const updateEvent = async (values) => {
     const { error } = await supabaseClient
