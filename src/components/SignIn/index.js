@@ -5,7 +5,7 @@ import "./style.css";
 import { useNavigate } from "react-router-dom";
 import { useUserStore } from "../../store/userStore";
 import { Image } from "antd";
-import HomeArt from "../../assets/journey.svg"
+import HomeArt from "../../assets/journey.svg";
 
 const Container = (props) => {
   const navigate = useNavigate();
@@ -23,9 +23,9 @@ export default function SignIn() {
   return (
     <div className="signInPage">
       <div className="signInContainer">
-        <Image style={{width:"20rem"}} src={HomeArt} preview={false} />
+        <Image style={{ width: "20rem" }} src={HomeArt} preview={false} />
         <h1>Happenings</h1>
-        <p>Record & share your journey</p>
+        <p>Create & share your timeline of achievements!</p>
         <Container supabaseClient={supabaseClient}>
           <Auth
             supabaseClient={supabaseClient}
