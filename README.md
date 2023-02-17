@@ -1,4 +1,13 @@
-# Record & Share your journey
+# Happenings
+Happenings is an open-source application to create and showcase your timeline of achievements.
+
+## Tech Stack
+- [React](https://reactjs.org/) – Framework
+- [Ant design](https://ant.design/) – UI Library
+- [Supabase](https://supabase.com/) – Database
+- [Netlify](https://www.netlify.com/) – Hosting
+
+## Record & Share your journey
 
 Happenings was built on a weekend with an idea of documenting your journey.
 You can either keep your timeline private to yourself or generate a public url for you to showcase your achievments / journey.
@@ -9,5 +18,3 @@ You can either keep your timeline private to yourself or generate a public url f
 ## Toggle visiblity
 <img width="1792" alt="image" src="https://user-images.githubusercontent.com/47049152/201507623-05871e81-e4d1-4559-b67a-93ec23f84817.png">
 
-## Your public profile
-<img width="1792" alt="image" src="https://user-images.githubusercontent.com/47049152/201507641-cde9c888-8c28-40f3-8c52-2726cae35c15.png">
