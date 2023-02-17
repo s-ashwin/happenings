@@ -123,7 +123,7 @@ export default function UserConfig({ isModalOpen, closeModal }) {
             setUserConfig({ ...userConfig, is_public: value });
           }}
           checkedChildren="public"
-          unCheckedChildren="private"
+          unCheckedChildren="public"
         />
       </Space>
     </Modal>
