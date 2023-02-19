@@ -46,3 +46,5 @@ create table timeline (
 - Configure google auth by following this [Supabase google auth docs](https://supabase.com/docs/guides/auth/social-login/auth-google)
 - That's it. You are good to go. Start your app with ```npm start```
 
+# Support
+Please feel free to join [Discord](https://discord.gg/NMyFEDre) and clarify things.
