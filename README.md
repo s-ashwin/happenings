@@ -42,8 +42,9 @@ create table timeline (
 ```
 
 - Navigate to Storage and create a new bucket named ```event-images```
-- Grab your project URL and public anon key from Project Settings -> API and add them to the .env file (Refer .env.sample file)
-- Configure google auth by following this [Supabase google auth docs](https://supabase.com/docs/guides/auth/social-login/auth-google)
+- Grab your project URL and public anon key from Project Settings -> API 
+- Create a new file ```.env``` in the root directory of the project and add the Project URL and Public Anon Key to this file (Refer .env.sample file)
+- Configure google auth by following [Supabase google auth docs](https://supabase.com/docs/guides/auth/social-login/auth-google)
 - That's it. You are good to go. Start your app with ```npm start```
 
 # Support
