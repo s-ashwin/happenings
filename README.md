@@ -10,7 +10,7 @@ Happenings is an open-source application to create and showcase your timeline of
 ## Record & Share your journey
 
 Happenings was built on a weekend with an idea of documenting your journey.
-You can either keep your timeline private to yourself or generate a public url for you to showcase your achievments / journey.
+You can create a timeline and either keep it private to yourself or generate a public url for you to showcase your achievments / journey.
 
 ## DB Schema
 <img width="1104" alt="image" src="https://user-images.githubusercontent.com/47049152/219935049-d5200630-b1a2-4092-974e-5d9b5fce4506.png">
