@@ -182,6 +182,7 @@ export default function EventForm({
                 listType="picture-card"
                 customRequest={handleUpload}
                 showUploadList={false}
+                accept="image/x-png,image/jpg,image/jpeg"
               >
                 {isUploading ? <Spin /> : uploadButton}
               </Upload>
