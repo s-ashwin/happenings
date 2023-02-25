@@ -16,7 +16,8 @@ import moment from "moment";
 import { supabaseClient } from "../../supabase/client";
 import { useUserStore } from "../../store/userStore";
 import { handleError, handleSuccess } from "../../util";
-import { DeleteOutlined, PlusOutlined } from "@ant-design/icons";
+import { DeleteOutlined, InfoCircleOutlined, PlusOutlined } from "@ant-design/icons";
+import Tooltip from "antd/lib/tooltip";
 
 export default function EventForm({
   event,
@@ -29,6 +30,13 @@ export default function EventForm({
   const [isUploading, setIsUpLoading] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [imageURL, setImageUrl] = useState(event?.image_url);
+  const [requiredMark, setRequiredMarkType] = useState('optional');
+  const [valueTitle, setValueTitle] = useState("");
+  const [valueDate, setValueDate] = useState("");
+
+  const onRequiredTypeChange = ({ requiredMarkValue }) => {
+    setRequiredMarkType(requiredMarkValue);
+  };
 
   const updateEvent = async (values) => {
     const { error } = await supabaseClient
@@ -59,7 +67,6 @@ export default function EventForm({
       handleError({ message: "Please check your input" });
       return;
     }
-
     values.image_url = imageURL;
 
     setIsLoading(true);
@@ -71,6 +78,7 @@ export default function EventForm({
     setIsLoading(false);
     closeModal();
   };
+
 
   const handleUpload = async ({ file }) => {
     setIsUpLoading(true);
@@ -129,35 +137,73 @@ export default function EventForm({
       </div>
     </div>
   );
+  const accion=()=>{
+    onFinish(form.getFieldsValue());
+  }
+  
+  const onInput = (e) => {
+    //console.log(e.target.value)
+    setValueTitle(e.target.value)};
+
+  const onChange = (date, dateString) => {
+      //console.log(dateString);
+      if(dateString !== ""){
+        setValueDate(dateString)
+      }
+  };
+
 
   return (
     <Modal
       open={isModalOpen}
-      onOk={() => {
-        onFinish(form.getFieldsValue());
-      }}
+      onOk={()=>{accion}}
       onCancel={() => {
         closeModal();
       }}
-      okText={"Save"}
       confirmLoading={isLoading}
       centered
+      footer={[
+        <Button onClick={()=>{closeModal()}}>Cancel</Button>,
+        <Button type="primary" onClick={accion} disabled={valueDate !== "" && valueTitle !== "" ? false : true} >Save</Button>,
+        <br></br>,
+        <Tooltip placement="topLeft" title="Save available when title and date are filled in" >
+          <InfoCircleOutlined />
+        </Tooltip>
+      ]}
+     
     >
       <Form
-        initialValues={event ? { ...event, date: moment.utc(event.date) } : {}}
+        initialValues={event ? { ...event, date: moment.utc(event.date), requiredMarkValue: requiredMark } 
+        : {requiredMarkValue: requiredMark}}
         layout={"vertical"}
         form={form}
-        onValuesChange={() => {}}
+        onValuesChange={() => {onRequiredTypeChange}}
+        requiredMark={requiredMark}
         onFinish={onFinish}
+        
       >
-        <Form.Item required name="date" label="Date">
-          <DatePicker />
+        <Form.Item name="date" label="Date" 
+        rules={[
+          {
+            required:true,
+            message: 'Please input Date!',
+          },
+        ]}
+        tooltip="This is a required field">
+          <DatePicker  onChange={onChange}/>
         </Form.Item>
-        <Form.Item required name="title" label="Event title">
-          <Input placeholder="What happened?" />
+        <Form.Item name="title" label="Event title" 
+        rules={[
+          {
+            required:true,
+            message: 'Please input a Title!',
+          },
+        ]}
+        tooltip="This is a required field">
+          <Input placeholder="What happened?" onInput={onInput}/>
         </Form.Item>
 
-        <Form.Item name="description" label="Event description">
+        <Form.Item name="description" label="Event description" >
           <TextArea rows={4} />
         </Form.Item>
         <div>
