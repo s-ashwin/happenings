@@ -1,6 +1,8 @@
 # Happenings
 Happenings is an open-source application to create and showcase your timeline of achievements.
 
+<a href="https://www.producthunt.com/posts/happenings?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-happenings" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=381237&theme=dark" alt="Happenings - Create&#0032;and&#0032;share&#0032;your&#0032;timeline&#0032;of&#0032;achievements✨ | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" /></a>
+
 ## Tech Stack
 - [React](https://reactjs.org/) – Framework
 - [Ant design](https://ant.design/) – UI Library
