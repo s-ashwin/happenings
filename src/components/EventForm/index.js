@@ -16,7 +16,7 @@ import moment from "moment";
 import { supabaseClient } from "../../supabase/client";
 import { useUserStore } from "../../store/userStore";
 import { handleError, handleSuccess } from "../../util";
-import { DeleteOutlined, InfoCircleOutlined, PlusOutlined } from "@ant-design/icons";
+import { DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 import Tooltip from "antd/lib/tooltip";
 
 export default function EventForm({
@@ -157,14 +157,11 @@ export default function EventForm({
       centered
       footer={[
         <Button key="cancelButton" onClick={()=>{closeModal()}}>Cancel</Button>,
-        //Personalized button in the modal
-        //Disable when valueTitle and valueDate aren't filled in.
-        <Button key="saveButton"type="primary" onClick={() =>{onFinish(form.getFieldsValue());}}
-         disabled={valueDate !== "" && valueTitle !== "" ? false : true} >Save</Button>,
-        <br key="space"/>,
-        <Tooltip key="saveTooltip" placement="topLeft" title="Save available when title and date are filled in" >
-          <InfoCircleOutlined />
-        </Tooltip>
+        <Tooltip key="saveTooltip" placement="top" title="Save available when title and date are filled in" >
+          <Button key="saveButton"type="primary" onClick={() =>{onFinish(form.getFieldsValue());}}
+                disabled={valueDate !== "" && valueTitle !== "" ? false : true}  
+                style={{margin: "0.75em"}}>Save</Button>
+        </Tooltip>,
       ]}
      
     >
@@ -234,3 +231,4 @@ export default function EventForm({
     </Modal>
   );
 }
+
