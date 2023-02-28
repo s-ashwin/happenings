@@ -17,6 +17,7 @@ import { supabaseClient } from "../../supabase/client";
 import { useUserStore } from "../../store/userStore";
 import { handleError, handleSuccess } from "../../util";
 import { DeleteOutlined, PlusOutlined } from "@ant-design/icons";
+import Tooltip from "antd/lib/tooltip";
 
 export default function EventForm({
   event,
@@ -29,6 +30,10 @@ export default function EventForm({
   const [isUploading, setIsUpLoading] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [imageURL, setImageUrl] = useState(event?.image_url);
+
+  //States to control in the current time when the required input change.
+  const [valueTitle, setValueTitle] = useState("");
+  const [valueDate, setValueDate] = useState("");
 
   const updateEvent = async (values) => {
     const { error } = await supabaseClient
@@ -59,7 +64,6 @@ export default function EventForm({
       handleError({ message: "Please check your input" });
       return;
     }
-
     values.image_url = imageURL;
 
     setIsLoading(true);
@@ -71,6 +75,7 @@ export default function EventForm({
     setIsLoading(false);
     closeModal();
   };
+
 
   const handleUpload = async ({ file }) => {
     setIsUpLoading(true);
@@ -130,34 +135,67 @@ export default function EventForm({
     </div>
   );
 
+  //Function to save the input Title value when it changes
+  const onInput = (e) => {
+    setValueTitle(e.target.value)};
+
+  //Function to save the input Date-value when it changes
+  const onChange = (date, dateString) => {
+      if(dateString !== ""){
+        setValueDate(dateString)
+      }
+  };
+
+
   return (
     <Modal
       open={isModalOpen}
-      onOk={() => {
-        onFinish(form.getFieldsValue());
-      }}
       onCancel={() => {
         closeModal();
       }}
-      okText={"Save"}
       confirmLoading={isLoading}
       centered
+      footer={[
+        <Button key="cancelButton" onClick={()=>{closeModal()}}>Cancel</Button>,
+        <Tooltip key="saveTooltip" placement="top" title="Save available when title and date are filled in" >
+          <Button key="saveButton"type="primary" onClick={() =>{onFinish(form.getFieldsValue());}}
+                disabled={valueDate !== "" && valueTitle !== "" ? false : true}  
+                style={{margin: "0.75em"}}>Save</Button>
+        </Tooltip>,
+      ]}
+     
     >
       <Form
-        initialValues={event ? { ...event, date: moment.utc(event.date) } : {}}
+        initialValues={event ? { ...event, date: moment.utc(event.date) } 
+        : {}}
         layout={"vertical"}
         form={form}
-        onValuesChange={() => {}}
+        requiredMark="optional"
         onFinish={onFinish}
+        
       >
-        <Form.Item required name="date" label="Date">
-          <DatePicker />
+        <Form.Item name="date" label="Date" 
+        rules={[
+          {
+            required:true,
+            message: 'Please input Date!',
+          },
+        ]}
+        tooltip="This is a required field">
+          <DatePicker  onChange={onChange}/>
         </Form.Item>
-        <Form.Item required name="title" label="Event title">
-          <Input placeholder="What happened?" />
+        <Form.Item name="title" label="Event title" 
+        rules={[
+          {
+            required:true,
+            message: 'Please input a Title!',
+          },
+        ]}
+        tooltip="This is a required field">
+          <Input placeholder="What happened?" onInput={onInput}/>
         </Form.Item>
 
-        <Form.Item name="description" label="Event description">
+        <Form.Item name="description" label="Event description" >
           <TextArea rows={4} />
         </Form.Item>
         <div>
@@ -193,3 +231,4 @@ export default function EventForm({
     </Modal>
   );
 }
+
