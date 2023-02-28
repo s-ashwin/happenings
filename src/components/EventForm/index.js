@@ -30,13 +30,10 @@ export default function EventForm({
   const [isUploading, setIsUpLoading] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [imageURL, setImageUrl] = useState(event?.image_url);
-  const [requiredMark, setRequiredMarkType] = useState('optional');
+
+  //States to control in the current time when the required input change.
   const [valueTitle, setValueTitle] = useState("");
   const [valueDate, setValueDate] = useState("");
-
-  const onRequiredTypeChange = ({ requiredMarkValue }) => {
-    setRequiredMarkType(requiredMarkValue);
-  };
 
   const updateEvent = async (values) => {
     const { error } = await supabaseClient
@@ -137,16 +134,13 @@ export default function EventForm({
       </div>
     </div>
   );
-  const accion=()=>{
-    onFinish(form.getFieldsValue());
-  }
-  
+
+  //Function to save the input Title value when it changes
   const onInput = (e) => {
-    //console.log(e.target.value)
     setValueTitle(e.target.value)};
 
+  //Function to save the input Date-value when it changes
   const onChange = (date, dateString) => {
-      //console.log(dateString);
       if(dateString !== ""){
         setValueDate(dateString)
       }
@@ -156,29 +150,30 @@ export default function EventForm({
   return (
     <Modal
       open={isModalOpen}
-      onOk={()=>{accion}}
       onCancel={() => {
         closeModal();
       }}
       confirmLoading={isLoading}
       centered
       footer={[
-        <Button onClick={()=>{closeModal()}}>Cancel</Button>,
-        <Button type="primary" onClick={accion} disabled={valueDate !== "" && valueTitle !== "" ? false : true} >Save</Button>,
-        <br></br>,
-        <Tooltip placement="topLeft" title="Save available when title and date are filled in" >
+        <Button key="cancelButton" onClick={()=>{closeModal()}}>Cancel</Button>,
+        //Personalized button in the modal
+        //Disable when valueTitle and valueDate aren't filled in.
+        <Button key="saveButton"type="primary" onClick={() =>{onFinish(form.getFieldsValue());}}
+         disabled={valueDate !== "" && valueTitle !== "" ? false : true} >Save</Button>,
+        <br key="space"/>,
+        <Tooltip key="saveTooltip" placement="topLeft" title="Save available when title and date are filled in" >
           <InfoCircleOutlined />
         </Tooltip>
       ]}
      
     >
       <Form
-        initialValues={event ? { ...event, date: moment.utc(event.date), requiredMarkValue: requiredMark } 
-        : {requiredMarkValue: requiredMark}}
+        initialValues={event ? { ...event, date: moment.utc(event.date) } 
+        : {}}
         layout={"vertical"}
         form={form}
-        onValuesChange={() => {onRequiredTypeChange}}
-        requiredMark={requiredMark}
+        requiredMark="optional"
         onFinish={onFinish}
         
       >
