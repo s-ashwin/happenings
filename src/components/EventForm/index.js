@@ -17,6 +17,7 @@ import { supabaseClient } from "../../supabase/client";
 import { useUserStore } from "../../store/userStore";
 import { handleError, handleSuccess } from "../../util";
 import { DeleteOutlined, PlusOutlined } from "@ant-design/icons";
+import { Form, Input, DatePicker } from 'antd';
 
 export default function EventForm({
   event,
@@ -150,12 +151,76 @@ export default function EventForm({
         onValuesChange={() => {}}
         onFinish={onFinish}
       >
-        <Form.Item required name="date" label="Date">
-          <DatePicker />
-        </Form.Item>
-        <Form.Item required name="title" label="Event title">
-          <Input placeholder="What happened?" />
-        </Form.Item>
+        
+
+const layout = {
+  labelCol: {
+    span: 8,
+  },
+  wrapperCol: {
+    span: 16,
+  },
+};
+
+const tailLayout = {
+  wrapperCol: {
+    offset: 8,
+    span: 16,
+  },
+};
+
+const MyForm = () => {
+  const onFinish = (values) => {
+    console.log('Success:', values);
+  };
+
+  const onFinishFailed = (errorInfo) => {
+    console.log('Failed:', errorInfo);
+  };
+
+  return (
+    <Form>
+      {...layout}
+      name="basic"
+      initialValues={{
+        remember: true,
+      }}
+      onFinish={onFinish}
+      onFinishFailed={onFinishFailed}
+    >
+      <Form.Item
+        label="Date"
+        name="date"
+        rules={[
+          {
+            required: true,
+            message: 'Please select a date!',
+          },
+        ]}
+      >
+        <DatePicker style={{ width: '100%' }} />
+      </Form.Item>
+
+      <Form.Item
+        label="Event Title"
+        name="title"
+        rules={[
+          {
+            required: true,
+            message: 'Please input the title of the event!',
+          },
+        ]}
+      >
+        <Input placeholder="What happened?" style={{ width: '100%' }} />
+      </Form.Item>
+
+      <Form.Item {...tailLayout}>
+        <Button type="primary" htmlType="submit">
+          Submit
+        </Button>
+      </Form.Item>
+    </Form>)
+};
 
         <Form.Item name="description" label="Event description">
           <TextArea rows={4} />
